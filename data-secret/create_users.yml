@@ -1,0 +1,15 @@
+---
+- name: Hello I m play 1
+  hosts: fedora
+  become: True
+  vars_files:
+    - secret.yml
+  tasks:
+   - name: Add the user 'johnd' with a specific uid and a primary group of 'admin'
+     user:
+      name: "{{username}}"
+      password: "{{password}}"
+      #comment: creation user
+      #uid: 1040
+      #group: admin
+      #

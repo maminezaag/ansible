@@ -1,0 +1,14 @@
+---
+- name : apache 
+  hosts: myself
+  tasks:
+    - name : yum verification
+      yum  : 
+       name : httpd
+       state: latest
+
+
+
+
+#  - second
+#  - third

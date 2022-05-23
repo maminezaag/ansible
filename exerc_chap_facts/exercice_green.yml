@@ -1,0 +1,59 @@
+---
+- name: Hello I m play 1
+  hosts: webserver
+  vars:
+    firewall_pkg: firewalld
+    firewall_svc: firewalld
+    web_pkg: httpd
+    ssl_pkg: mod_ssl
+    httpdconf_src: files/httpd.conf
+    httpdconf_dest: /etc/httpd/conf/httpd.conf
+    htaccess_src: files/.htaccess
+    secrets_dir: /etc/httpd/secrets
+    sercrets_src: files/htpasswd
+    secrets_dest: "{{ secrets_dir }}/tpasswd"
+    web_root: /var/www/html
+  tasks:
+   - name: install pkgs
+     yum:
+      name:
+        - "{{ firewall_pkg }}"
+        - "{{ web_pkg }}"
+        - "{{ ssl_pkg }}"
+      state: latest
+ #  - name: Copy 
+ #    copy:
+ #     src: "{{ httpdconf_src }}"
+ #     dest: "{{ httpdconf_dest }}"
+ #     owner: root
+ #     group: root
+ #     mode: '0644'
+ #     remote_src: yes
+   - name: Create a directory if it does not exist
+     file:
+       path: "{{ secrets_dir }}"
+       state: directory
+       owner: apache
+       group: apache
+       mode: '0500'
+  # - name: Copy 
+  #   copy:
+  #    src: "{{ sercrets_src }}"
+  #    dest:mel  "{{ secrets_dest }}"
+  #    owner: apache
+  #    group: apache
+  #    mode: '0400'
+  #    remote_src: yes
+#    - name: Copy
+#      copy:
+ #      src: "{{ htaccess_src }}"
+  #     dest: "{{ web_root }}"/.htaccess
+   #    owner: apache
+    #   group: apache
+     #  mode: '0400'
+      # remote_src: yes
+   - name: Copy using inline content
+     copy:
+      content: "{{ ansible_facts['fqdn'] }}  ({{ ansible_facts ['all_ipv4_addresses'|203] }}) hhahhi   "
+      dest: '/tmp/test_facts'
+

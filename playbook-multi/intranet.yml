@@ -1,0 +1,41 @@
+---
+- name : enable intranet serivices
+  hosts: fedora  
+  become: yes
+  tasks:
+    - name: lest verision of httpd and firewald
+      yum:
+       name:
+        - httpd
+        - firewalld
+       state: latest
+    - name: test html page is installed   
+      copy:
+        content: "welcome to sousse ma9baret gozat"
+        dest: /var/www/html/index.html
+    - name: firewall to be ready for atatcksss
+      service:
+        name : firewalld
+        enabled: true
+        state : started
+    - name: firewalld permi http
+      firewalld:
+        #service: http
+        port: 80/tcp
+        permanent: true
+        state: enabled
+        immediate: yes
+    - name: apache is ready
+      service:
+         name: httpd
+         enabled: true
+         state: started
+- name: second play 
+  hosts : all
+  become : no
+  tasks:
+   - name : connect to intratnet web server
+     uri:
+       url: http://192.168.122.203
+       return_content : yes
+       status_code : 200

@@ -1,0 +1,17 @@
+---
+- name : apache 
+  hosts: myself
+  tasks:
+    - name : yum verification
+      yum  : 
+       name : httpd
+       state: latest
+    - name : copie fichier du local au hosts
+      copy :
+        src :  files/index.html
+        des :  /var/www/html/index.html
+
+
+
+#  - second
+#  - third

@@ -1,0 +1,57 @@
+---
+- name: Enable internet service PLAY I
+  become: yes
+  hosts: fedora 
+  tasks:
+    - name: yum operations
+      yum:
+          name:
+            - httpd
+            - firewalld
+            - mariadb-server
+            - php
+            - php-mysqlnd
+          state: latest
+    - name: firewalld service is ok
+      service:
+          name: firewalld 
+          state: started
+          enabled: true
+          # with_items:
+          #  - httpd
+          #  - mariadb
+          #  - firewalld
+    - name: mariad service is ok
+      service:
+          name: mariadb
+          state: started
+          enabled: true
+    - name: httpd service is ok
+      service:
+          name: httpd
+          state: started
+          enabled: true
+    - name: rules for firewalld
+      firewalld:
+          #port: 80/tcp
+          service: http
+          permanent: true
+          state: enabled
+          immediate: yes
+    - name: generation web page
+      get_url:
+        dest: "/var/www/html/"
+        mode: 0644
+        #force: true
+        url: https//192.168.1.202/labs/playbook/index.php
+
+- name: access web page PLAY II
+  hosts: myself
+  tasks:
+   - name: tester la page sur Fedora
+     uri:
+        url: http://192.168.122.203
+        return_content : yes
+        status_code : 200
+
+

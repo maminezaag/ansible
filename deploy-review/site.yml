@@ -1,0 +1,18 @@
+---
+- name : apache
+  hosts: all
+  tasks:
+    - name : yum verification
+      yum  :
+       name : httpd
+       state: latest
+    - name : copie fichier du local au hosts
+      copy :
+        src : files/index.html
+        dest : /var/www/html/index.html
+    - name : be sure that httpd is enable
+      service :
+        name : httpd
+        state : restarted 
+        enabled : yes
+        
