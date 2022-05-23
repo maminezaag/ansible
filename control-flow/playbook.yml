@@ -1,0 +1,29 @@
+---
+- name: Hello Amine I m playone !!
+  hosts: all
+  vars:
+    services_to_be_up:
+     - mariadb
+     - sshd
+     - firewalld     
+    mariadb_packages:
+     - mariadb-server
+     - python3-PyMySQL
+    supported_os:
+     - dor 
+     
+  tasks:
+    - name : Mariadb packages are installed or not??
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ mariadb_packages }}"
+    - name: Start MariaDB service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: "{{ services_to_be_up }}"
+      when:  ansible_distribution in supported_os 
+ 
+
