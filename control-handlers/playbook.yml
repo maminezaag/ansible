@@ -19,6 +19,8 @@
         name: "{{ item }}"
         state: present
       loop: "{{ mariadb_packages }}"
+      notify:
+       - set db pwd
     - name: Start MariaDB service
       service:
         name: "{{ item }}"
@@ -26,5 +28,31 @@
         enabled: true
       loop: "{{ services_to_be_up }}"
       when:  ansible_distribution in supported_os 
- 
+    - name : modify http 
+      template:
+        src: /tmp/http
+        dest: /etc/httpd/conf/httpd.conf
+      notify:
+        - restarti apachi
+    - name : modify my
+      template:
+        src: /tmp/myy
+        dest: /etc/my.conf
+      notify:
+        - restarti maria
+
+  handlers:
+   - name: restarti apachi
+     service:
+       name: httpd
+       state: restarted
+   - name: restarti maria
+     service:
+       name: mariadb
+       state: restarted
+   - name: set db pwd
+     mysql_user:
+      name: root
+      password: redhat
+
 
