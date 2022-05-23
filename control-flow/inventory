@@ -1,2 +1,2 @@
-[locally]
+[local]
 localhost ansible_port=6003
