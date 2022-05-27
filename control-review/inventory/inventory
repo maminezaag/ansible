@@ -1,0 +1,6 @@
+[fedora_dar]
+localhost ansible_port=6003
+[pc_redhat_5edma]
+192.168.1.202
+[fedora]
+192.168.122.203

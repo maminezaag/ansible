@@ -1,0 +1,29 @@
+---
+- name: Task Failure Exercise
+  hosts: all
+  vars:
+   web_package: httpd
+   db_package: mariadb-server
+   db_service: mariadb
+   compr_pkg: unrar
+   web_ser: httpd.service
+  tasks:
+    - name: ZAMO block ye m3allem
+      block:
+       - name : installi webpackage
+         yum:
+          name: "{{ web_package }}"
+          state: present
+          failed_when : web_package == "httpd"
+         
+      rescue:
+       - name: rahou webpackage failla w rani bbech nstalli mariadb
+         yum:
+          name: "{{ compr_pkg }}"
+          state: present
+      always:
+       - name: rahou webpackage failla w rani bbech nstalli mariadb
+         service:
+          name: "{{ web_ser }}"
+          state: started
+
