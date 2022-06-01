@@ -1,0 +1,6 @@
+[fedora_dar]
+localhost ansible_port=6003
+[pc_redhat_5edma]
+tnorangetn.ddns.net
+[fedora]
+192.168.122.203

@@ -1,0 +1,12 @@
+---
+- name: Task Failure Exercise
+  hosts: all
+  vars:
+   
+    
+  tasks:
+   - name: Fetch the /var/log/secure log file from managed hosts
+     fetch:
+        src: /var/log/samba
+        dest: secure-backups
+        flat: no
