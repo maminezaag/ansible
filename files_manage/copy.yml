@@ -1,0 +1,9 @@
+---
+- name: play 1 marhbé
+  hosts: all
+  tasks:
+   - name: Copy a file to managed hosts and set attributes
+     file:
+      path: /home/devops/users.txt
+      setype: user_home_t
+      seuser: _default
