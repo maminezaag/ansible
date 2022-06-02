@@ -1,0 +1,15 @@
+---
+- name: Task Failure Exercise
+  hosts: all
+  vars:
+   web_package: http
+   db_package: mariadb-server
+   db_service: mariadb
+  vars_files: vars.yml
+  tasks:
+     - name :starti il 7absin
+       service:
+        name: "{{ item }}"
+        state: started
+        loop: "{{ services }}"
+
