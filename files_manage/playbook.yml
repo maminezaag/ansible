@@ -5,8 +5,35 @@
    
     
   tasks:
-   - name: Fetch the /var/log/secure log file from managed hosts
-     fetch:
-        src: /var/log/samba
-        dest: secure-backups
-        flat: no
+   - name: configure /etc/motd
+     template:
+      src: welcome.j2
+      dest: /etc/motd
+      owner: root
+      group: root
+      mode: 0644
+   - name: verify with stat module das root is the owner
+     stat:
+      path: /etc/motd
+     register: st
+   - name: verify debug
+     debug:
+      msg: "Whoops! file ownership has changed"
+     when: st.stat.pw_name != 'root' 
+   - name: ensure that issue file existe
+     copy:
+      src: files/issue
+      dest: /etc/
+      owner: root
+      group: root
+      mode: 0644
+
+   - name: Create a symbolic link
+     file:
+      src: /etc/issue
+      dest: /etc/isssue.net
+        #owner: root
+        #group: root
+      state: link
+
+    

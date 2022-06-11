@@ -1,7 +1,3 @@
-[pc_redhat_5edma]
-localhost 
 [centos_esxci_dar]
-maorangema.ddns.net ansible_port=9803
-[fedora]
-192.168.122.203
+192.168.1.173 ansible_port=9803
 
